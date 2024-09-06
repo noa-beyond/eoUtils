@@ -43,12 +43,13 @@ if (-not $OutputDir -PathType Container){
 # Run gdalwarp command
 foreach ($f in $InputFiles){
     $OutputFileName = Split-Path $f -leaf
-    $outfile = $OutputDir + "projected_" + $OutputFileName
+    $OutputFileName = "projected_" + $OutputFileName
+    $outfile = Join-Path -Path $OutputDir -ChildPath $OutputFileName
     & gdalwarp --config GDAL_CACHEMAX 4000 -wm 4000 -multi -wo NUM_THREADS=ALL_CPUS -t_srs EPSG:3857 -dstnodata 0 -nosrcalpha $f $outfile
 }
 
 if ($LASTEXITCODE -eq 0) {
-    Write-Output "Warped all TIFF files to $OutputFile"
+    Write-Output "Warped all tif files to $OutputFile"
     Write-Output "All TIFF files have been processed."
 } else {
     Write-Error "An error occurred during the warping process."
