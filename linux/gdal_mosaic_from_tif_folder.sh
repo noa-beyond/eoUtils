@@ -12,7 +12,7 @@
 # Of course, you can intoduce any other appropriate gdalwarp parameter.
 # This script can be better if you define the output driver just to be sure (COG)
 
-if [ "$#" -ne 2 ]; then
+if [ "$#" -ne 3 ]; then
   echo "Usage: $0 [/path/to/input/directory] [/path/to/output/directory] [resolution in meters (e.g. 2 for 2mx2m pixel size)]"
   exit 1
 fi

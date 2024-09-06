@@ -3,7 +3,7 @@
 # Takes an input folder, an output folder and a target resolution:
 # All .tif under input folder are merged into one composite (mosaic)
 # with an e.g. 2x2 meters resolution. Then, this mosaic is stored as "mosaic.tif" in the output folder.
-# e.g. of usage: .\gdal_warp_all_under_folder_COG_windows.bat C:\temp\data C:\temp\data\output 5
+# e.g. of usage: .\gdal_mosaic_from_tif_folder.ps1 C:\temp\data C:\temp\data\output 5
 # (execute script for all .tif under data folder, output mosaic.tif under output folder, using a resolution of 5x5 meters per pixel)
 # Please note that this will not work as expected if:
 # 1) GDAL is not installed in the working environment
@@ -25,7 +25,7 @@ if (-not (Get-Command gdalwarp -ErrorAction SilentlyContinue)) {
 
 # Check if correct number of arguments are passed
 if (-not $InputDir -or -not $OutputDir -or -not $Resolution) {
-    Write-Error "`n`nMissing arguments: `nUsage: .\gdal_mosaic_from_tif_folder.ps1 [.\path\to\input\directory\] [.\path\to\output\directory\] [resolution in meters (e.g. 2 for 2mx2m pixel size)]"
+    Write-Error "`n`nMissing arguments: `nUsage: .\gdal_mosaic_from_tif_folder.ps1 [.\path\of\input\directory\] [.\path\of\output\directory\] [resolution in meters (e.g. 2 for 2mx2m pixel size)]"
     exit 1
 }
 
@@ -34,7 +34,7 @@ $InputFiles = Get-ChildItem -Path $InputDir -Filter *.tif | Select-Object -Expan
 
 # Check if any .tif files are found
 if (-not $InputFiles) {
-    Write-Error "No TIFF files found in the input directory."
+    Write-Error "No TIFF (.tif) files found in the input directory. Are you sure they have they correct extension? (.tif)"
     exit 1
 }
 
