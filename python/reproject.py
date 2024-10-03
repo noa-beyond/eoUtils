@@ -26,13 +26,14 @@ def reproject_vrt_mosaic(input_path, source, target):
                         found = True
                 if found:
                     print("Done reprojecting and moving, going to vrt creation")
-                    merge_path = str(Path(root, that_dir, root.split("/")[-2] + "_" + root.split("/")[-1] + "_" + that_dir.strip("/") + "_merged.vrt"))
+                    mosaic_name = root.split("/")[-2] + "_" + root.split("/")[-1] + "_" + that_dir.strip("/")
+                    merge_path = str(Path(root, that_dir, mosaic_name + "_merged.vrt"))
                     tif_path = os.path.join(root, that_dir)
                     cmd_3 = f"gdalbuildvrt {merge_path} {tif_path}/*.tif"
                     os.system(cmd_3)
                     print("Done")
                     print("Building mosaic...")
-                    cmd_4 = f"gdal_translate -of COG -co NUM_THREADS=ALL_CPUS -co COMPRESS=LERC_DEFLATE -co QUALITY=25 -co BIGTIFF=YES {merge_path} {tif_path}/median_mosaic_LERC.tif"
+                    cmd_4 = f"gdal_translate -of COG -co NUM_THREADS=ALL_CPUS -co COMPRESS=LERC_DEFLATE -co QUALITY=25 -co BIGTIFF=YES {merge_path} {tif_path}/{mosaic_name}_median_mosaic_LERC.tif"
                     print("Done")
                     os.system(cmd_4)
 
