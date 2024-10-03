@@ -4,7 +4,7 @@ import re
 from pathlib import Path
 
 def reproject_vrt_mosaic(input_path, source, target):
-    pattern = re.compile(r"(32)(.*)\.tif")
+    pattern = re.compile(r"({source})(.*)\.tif")
     for root, dirs, files in os.walk(input_path):
         for that_dir in dirs:
             if "original" not in that_dir:
