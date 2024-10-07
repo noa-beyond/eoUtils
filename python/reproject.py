@@ -16,10 +16,8 @@ def reproject_vrt_mosaic(input_path, source, target):
                         if not os.path.exists(str(original_dir)):
                             original_dir.mkdir(parents=True, exist_ok=True)
                         file_path = str(Path(root, that_dir, item))
-                        # print(f"Processing {file}")
                         f_output = file_path + "_reprojected.tif"
-                        # print(f"Output: {f_output}")
-                        cmd = f"gdalwarp --config GDAL_CACHEMAX 500 -wm 60% -co COMPRESS=DEFLATE -s_srs '+proj=utm +zone={source} +datum=WGS84 +units=m +no_defs ' -t_srs '+proj=utm +zone={target} +datum=WGS84 +units=m +no_defs ' {file_path} {f_output}"
+                        cmd = f"gdalwarp --config GDAL_CACHEMAX 9000 -wm 80% -co COMPRESS=DEFLATE -s_srs '+proj=utm +zone={source} +datum=WGS84 +units=m +no_defs ' -t_srs '+proj=utm +zone={target} +datum=WGS84 +units=m +no_defs ' {file_path} {f_output}"
                         os.system(cmd)
                         cmd_1 = f"mv {file_path} {str(original_dir)}"
                         os.system(cmd_1)
